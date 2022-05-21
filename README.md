@@ -1,0 +1,17 @@
+# 자가진단 자동화
+![Python](https://img.shields.io/badge/-v3.9.13-3776AB?style=for-the-badge&logo=python&logoColor=white)
+[![Discord](https://img.shields.io/discord/722728062839423007?label=Discord&style=for-the-badge&color=5865F2&logo=Discord&logoColor=white)](https://discord.com/invite/MF7FEGhHh2) 
+![Last_Update](https://img.shields.io/github/last-commit/justhuman1008/JustBot?style=for-the-badge)
+
+Discord.py의 포크버전인 [Pycord](https://github.com/Pycord-Development/pycord)와 [hcs-python](https://github.com/covid-hcs/hcs-python)으로 제작했습니다.
+
+현재 서버가 없어서.. Samsung Galaxy S9 UserLAnd에서 봇을 돌리고 있습니다.  
+Heroku나 GCP, 오라클 클라우드 등 서버 호스팅 IP를 블락한건지 작동하지를 않네요.....  
+~~제가 뭔가 실수한걸수도~~
+
+개발자 디스코드: Just_human1008#8138
+
+### [**✉️ 봇 초대하기**](https://discord.com/oauth2/authorize?client_id=971972027281989662&permissions=412317142080&scope=bot%20applications.commands)
+
+### 봇 도움말
+<img src="/Image/help.png" alt ="Data" style="width: 500px;"/>  

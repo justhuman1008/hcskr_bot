@@ -40,55 +40,40 @@ for filename in listdir('./cogs'): # Cogs 자동 로드(봇 작동시)
         print(f'{filename[:-3]}가 정상적으로 로드되었습니다.')
 
 
-def help(msg):
-    if msg == None:
-        Help_Embed = discord.Embed(title=f"{bot.user.name} 도움말", description=f"­", colour=0xffdc16)
-        Help_Embed.add_field(name=f"자가진단 정보 입력하기", value=f"`/자가진단 등록`", inline=False)
-        Help_Embed.add_field(name=f"자가진단 정보 삭제하기", value=f"`/자가진단 삭제`", inline=False)
-        Help_Embed.add_field(name=f"자가진단 실행하기", value=f"`/자가진단 실행`", inline=False)
-        Help_Embed.add_field(name=f"자가진단 예약하기", value=f"`/자가진단 예약`", inline=False)
-        Help_Embed.set_thumbnail(url=bot.user.display_avatar)
 
-    elif msg == "실행":
-        Help_Embed = discord.Embed(title=f"자가진단 {msg} 도움말", description=f"­", colour=0xffdc16)
-        Help_Embed.add_field(name=f"선행조건", value=":exclamation:\n" + "`/자가진단 등록`을 진행한 유저만 사용할 수 있습니다.", inline=False)
-        Help_Embed.add_field(name=f"명령어 사용 방법", value=f"`/자가진단 실행`을 입력합니다.", inline=False)
-        Help_Embed.set_thumbnail(url=bot.user.display_avatar)
+@bot.slash_command(description="봇 도움말 확인")
+async def 도움말(ctx):
+    Help_Embed = discord.Embed(title=f"{bot.user.name} 도움말", description=f"­", colour=0xffdc16)
+    Help_Embed.add_field(name=f"자가진단 정보 입력하기 ⠀⠀⠀⠀", value=f":small_blue_diamond: /자가진단 등록", inline=True)
+    Help_Embed.add_field(name=f"자가진단 정보 삭제하기 ", value=f":small_blue_diamond: /자가진단 삭제", inline=True)
+    Help_Embed.add_field(name="­", value=f"­", inline=True)
+    Help_Embed.add_field(name=f"자가진단 실행하기 ⠀⠀⠀⠀", value=f":small_blue_diamond: /자가진단 실행", inline=True)
+    Help_Embed.add_field(name=f"자가진단 예약하기", value=f":small_blue_diamond: /자가진단 예약", inline=True)
+    Help_Embed.add_field(name="­", value=f"­", inline=True)
+    Help_Embed.add_field(name="­", value=f"­", inline=False)
+    Help_Embed.add_field(name="자가진단 매크로 등록 방법을 모른다면?", value=f":small_blue_diamond: /가이드", inline=False)
+    Help_Embed.set_thumbnail(url=bot.user.display_avatar)
+    await ctx.respond(embed=Help_Embed)
 
-    elif msg == "예약":
-        Help_Embed = discord.Embed(title=f"자가진단 {msg} 도움말", description=f"­", colour=0xffdc16)
-        Help_Embed.add_field(name=f"선행조건", value=":exclamation:\n" + "`/자가진단 등록`을 진행한 유저만 사용할 수 있습니다.", inline=False)
-        Help_Embed.add_field(name=f"명령어 사용 방법", value=f"`/자가진단 예약`을 입력합니다.", inline=False)
-        Help_Embed.set_thumbnail(url=bot.user.display_avatar)
 
-    elif msg == "등록":
-        Help_Embed = discord.Embed(title=f"자가진단 {msg} 도움말", description=f"­", colour=0xffdc16)
-        Help_Embed.add_field(name=f"명령어 사용 방법", 
-                            value=f"1. `/자가진단 등록`을 입력합니다. \n2. `자가진단 정보 입력하기`창에 본인의 정보를 입력합니다. \n3. ✅ 버튼 혹은 ⛔ 버튼을 누릅니다.", 
-                            inline=False)
-        Help_Embed.set_thumbnail(url=bot.user.display_avatar)
+@bot.slash_command(description="자가진단 자동화 등록 가이드")
+async def 가이드(ctx):
+    guide = discord.Embed(title=f"자가진단 자동화 등록 가이드", description=f"­", colour=0xffdc16)
+    guide.add_field(name=f"1. 자신의 정보 입력하기", value="`/자가진단 등록`으로 자신의 정보를 입력합니다.", inline=False)
+    guide.add_field(name=f"2. 자가진단 예약하기", value="`/자가진단 예약`을 입력시 앞으로 매일 오전 7시에 자가진단을 진행합니다.", inline=False)
+    guide.add_field(name=f"3. 자가진단 예약 해제하기", value="`/자가진단 예약`을 다시 입력하시면 자동 자가진단이 종료됩니다.", inline=False)
+    guide.add_field(name=f"4. 지금 자가진단하기", value=f"`/자가진단 실행`을 입력하면 지금 자가진단을 진행합니다.", inline=False)
+    guide.set_thumbnail(url=bot.user.display_avatar)
+    await ctx.respond(embed=guide)
 
-    else:
-        Help_Embed = discord.Embed(title=f"자가진단 {msg} 도움말", description=f"­", colour=0xffdc16)
-        Help_Embed.add_field(name=f"선행조건", value=":exclamation:\n" + "`/자가진단 등록`을 진행한 유저만 사용할 수 있습니다.", inline=False)
-        Help_Embed.add_field(name=f"명령어 사용 방법", 
-                            value=f"1. `/자가진단 삭제`을 입력합니다. \n2. ✅ 버튼 혹은 ⛔ 버튼을 누릅니다.", 
-                            inline=False)
-        Help_Embed.set_thumbnail(url=bot.user.display_avatar)
 
-    return Help_Embed
-
-@bot.slash_command(guild_id=[guild], description="봇 도움말 확인")
-async def 도움말(ctx, 명령어:Option(str,"다음 중 하나를 선택하세요.", choices=["실행", "예약", "등록", "삭제"])=None):
-    await ctx.respond(embed = help(명령어))
-
-@bot.command(guild_id=[guild], description="봇 레이턴시 확인")
+@bot.command(description="봇 레이턴시 확인")
 async def ping(ctx):
     ping = discord.Embed(title="Pong!", description=f"딜레이: {round(bot.latency * 1000)}ms 초", colour=0xffdc16)
     await ctx.respond(embed=ping)
 
 
-@bot.command(guild_id=[guild], description=f"봇에 대한 정보를 출력합니다.")
+@bot.command(description=f"봇에 대한 정보를 출력합니다.")
 async def 정보(ctx):
     bot_info = discord.Embed(title=bot.user.name, color=0xffdc16)
     bot_info.add_field(name="핑", value=f'`{round(bot.latency * 1000)}ms`', inline=True)
@@ -104,7 +89,7 @@ async def 정보(ctx):
     bot_info.set_thumbnail(url=bot.user.display_avatar)
     await ctx.respond(embed=bot_info)
 
-@bot.command(guild_id=[guild], description=f"봇 초대링크")
+@bot.command(description=f"봇 초대링크")
 async def invite(ctx):
     invitelink = f"https://discord.com/oauth2/authorize?client_id={bot.application_id}&permissions=412317142080&scope=bot%20applications.commands"
 
@@ -180,7 +165,7 @@ def delete_info(DiscordID):
         return False
 
 
-@bot.slash_command(guild_id=[guild], description="교육부 자가진단을 진행합니다.")
+@bot.slash_command(description="교육부 자가진단을 진행합니다.")
 async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세요.", choices=["실행", "예약", "등록", "삭제"])):
 
     errorlist = {"FORMET":"존재하지 않는 지역, 학교급", "NOSCHOOL":"학교 검색 실패", "NOSTUDENT":"학생 검색 실패", "UNKNOWN":"알 수 없는 에러"}
@@ -288,7 +273,7 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
                     School = self.children[3].value
                     Password = self.children[4].value
                     
-                    print(Name,Birthday,Area,School,Password,School_lv)
+                    #print(Name,Birthday,Area,School,Password,School_lv)
                     class Button(discord.ui.View):
                         @discord.ui.button(style=discord.ButtonStyle.green, emoji="✅")
                         async def OK(self, button: discord.ui.Button, interaction: discord.Interaction):

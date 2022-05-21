@@ -1,15 +1,1 @@
-{
-	"1-1234567890": [
-		{
-			"Nickname": "테스트",
-			"DiscordID": "1-1234567890",
-			"Name": "홍길동",
-			"Birthday": "000000",
-			"Area": "한국",
-			"School": "한국고등학교",
-			"School_lv": "고등학교",
-			"Password": "0000",
-			"Auto_check": "O"
-		}
-	]
-}
+{}

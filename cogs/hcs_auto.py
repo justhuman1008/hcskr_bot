@@ -1,6 +1,7 @@
 from discord.ext import commands, tasks
 from hcskr import asyncSelfCheck
 import datetime
+import random
 import json
 
 from setting import hcs_path, hcs_time_H, hcs_time_M
@@ -8,11 +9,16 @@ from setting import hcs_path, hcs_time_H, hcs_time_M
 class hcs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.around = None
         self.Auto_check.start()
+
 
     @tasks.loop(seconds=40)
     async def Auto_check(self):
-        select = str(datetime.time(hcs_time_H, hcs_time_M).strftime("%H:%M"))
+        if self.around == None:
+            self.around = 0
+
+        select = str(datetime.time(hcs_time_H, hcs_time_M-self.around).strftime("%H:%M"))
         now = str(datetime.datetime.now().strftime("%H:%M"))
         weekday = datetime.datetime.now().weekday()
 
@@ -35,6 +41,7 @@ class hcs(commands.Cog):
 
                         if hcskr_result['code'] == 'SUCCESS':
                             print(f"{Nickname} : 자가진단 완료")
+                            self.around = random.randrange(1,6)
                         else:
                             print(f"{Nickname} : 자가진단 실패 - {hcskr_result['code']}")
             else:

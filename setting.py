@@ -10,7 +10,7 @@ owner = os.environ['Owner'] # 봇 소유자
 
 hcs_path ="hcs_info.json"
 hcs_time_H = 7
-hcs_time_M = 8
+hcs_time_M = 00
 
 # 이미지 URL ----------------------------------------------------------------------------------------------
 

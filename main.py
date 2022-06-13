@@ -1,4 +1,3 @@
-from ast import Pass
 import discord
 from discord.commands import Option
 from discord.ui import View, InputText, Modal
@@ -60,7 +59,7 @@ async def 도움말(ctx):
 async def 가이드(ctx):
     guide = discord.Embed(title=f"자가진단 자동화 등록 가이드", description=f"­", colour=0xffdc16)
     guide.add_field(name=f"1. 자신의 정보 입력하기", value="`/자가진단 등록`으로 자신의 정보를 입력합니다.", inline=False)
-    guide.add_field(name=f"2. 자가진단 예약하기", value="`/자가진단 예약`을 입력시 앞으로 매일 오전 7시에 자가진단을 진행합니다.", inline=False)
+    guide.add_field(name=f"2. 자가진단 예약하기", value="`/자가진단 예약`을 입력시 앞으로 매일 오전 7~7시 10분 사이 자가진단을 진행합니다.", inline=False)
     guide.add_field(name=f"3. 자가진단 예약 해제하기", value="`/자가진단 예약`을 다시 입력하시면 자동 자가진단이 종료됩니다.", inline=False)
     guide.add_field(name=f"4. 지금 자가진단하기", value=f"`/자가진단 실행`을 입력하면 지금 자가진단을 진행합니다.", inline=False)
     guide.set_thumbnail(url=bot.user.display_avatar)

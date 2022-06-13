@@ -4,13 +4,14 @@ import os
 token = os.environ['Token'] # 봇의 토큰
 guild = int(os.environ['Guild']) # 테스트용(관리자 전용) 길드
 owner = os.environ['Owner'] # 봇 소유자
+DB_channel = os.environ['DB_channel']
 
 
 #자가진단 설정 ----------------------------------------------------------------------------------------------
 
 hcs_path ="hcs_info.json"
 hcs_time_H = 7
-hcs_time_M = 00
+hcs_time_M = 7
 
 # 이미지 URL ----------------------------------------------------------------------------------------------
 

@@ -331,6 +331,32 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
             await ctx.respond(embed=not_registered)
             return
 
+@bot.slash_command(guild_ids=[guild], description="자가진단 정보를 강제로 입력합니다[관리자 한정]")
+async def 강제추가(ctx, 디스코드닉네임, 디스코드id, 이름, 생년월일, 지역, 학교명, 비밀번호, 예약유무:Option(str,"다음 중 하나를 선택하세요.", choices=["O", "X"])):
+    try:
+        if 학교명.find("고등학교") > -1:
+            School_lv = "고등학교"
+        elif 학교명.find("중학교") > -1:
+            School_lv = "중학교"
+        elif 학교명.find("초등학교") > -1:
+            School_lv = "초등학교"
+        elif 학교명.find("특수학교") > -1:
+            School_lv = "특수학교"
 
+        add_info(디스코드닉네임, 디스코드id, 이름, 생년월일, 지역, 학교명, School_lv, 비밀번호)
+
+        with open(file_path, "r", encoding="utf_8") as json_file:
+            json_data = json.load(json_file)
+            
+        if 예약유무 == "O":
+            json_data[디스코드id][0]['Auto_check'] = "O"
+        else:
+            json_data[디스코드id][0]['Auto_check'] = "X"
+
+        with open(file_path, 'w',encoding="utf_8") as writefile:
+            json.dump(json_data, writefile, indent="\t", ensure_ascii=False)
+        await ctx.respond("입력 성공")
+    except:
+        await ctx.respond("입력 실패")
 
 bot.run(BOT_token)

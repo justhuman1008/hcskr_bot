@@ -24,7 +24,7 @@ class hcs(commands.Cog):
             if select == now:
 
                 json_object = json.load(open(hcs_path,encoding="utf_8"))
-                print(f'자가진단이 시작됩니다. [ {datetime.datetime.now().strftime("%H:%M")} ]')
+                print(f'자가진단이 시작됩니다. [ {datetime.datetime.now().strftime("%y/%m/%d, %H:%M")} ]')
                 for k, v in json_object.items():
                     if v[0]['Auto_check'] == "O":
                         Nickname = v[0]['Nickname']
@@ -41,9 +41,13 @@ class hcs(commands.Cog):
                             print(f" -{Nickname} : 자가진단 완료")
                         else:
                             print(f" -{Nickname} : 자가진단 실패 - {hcskr_result['code']}")
+
                 self.time = random.randrange(1,8)
-                channel = self.bot.get_channel(DB_channel)
-                await channel.send(file=discord.File(hcs_path))
+                try:
+                    channel = self.bot.get_channel(DB_channel)
+                    await channel.send(file=discord.File(hcs_path))
+                except:
+                    print("JSON 파일 전송 실패")
             else:
                 pass
         else:

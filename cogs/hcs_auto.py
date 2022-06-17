@@ -46,8 +46,9 @@ class hcs(commands.Cog):
                 try:
                     channel = self.bot.get_channel(DB_channel)
                     await channel.send(file=discord.File(hcs_path))
+                    print(" -JSON 파일 전송 완료")
                 except:
-                    print("JSON 파일 전송 실패")
+                    print(" -JSON 파일 전송 실패")
             else:
                 pass
         else:

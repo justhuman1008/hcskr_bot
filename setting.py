@@ -4,7 +4,7 @@ import os
 token = os.environ['Token'] # 봇의 토큰
 guild = int(os.environ['Guild']) # 테스트용(관리자 전용) 길드
 owner = os.environ['Owner'] # 봇 소유자
-DB_channel = os.environ['DB_channel']
+DB_channel = int(os.environ['DB_channel']) # JSON파일을 보낼 채널
 
 
 #자가진단 설정 ----------------------------------------------------------------------------------------------

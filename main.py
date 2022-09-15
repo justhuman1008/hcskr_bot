@@ -31,7 +31,7 @@ async def on_ready():
     print(bot.user.name)
     print("연결에 성공했습니다.")
     print("=========================")
-    await bot.change_presence(activity=discord.Game("/도움말"))
+    await bot.change_presence(activity=discord.Game("/가이드"))
 
 for filename in listdir('./cogs'): # Cogs 자동 로드(봇 작동시)
     if filename.endswith('.py'):
@@ -74,12 +74,17 @@ async def ping(ctx):
 
 @bot.command(description=f"봇에 대한 정보를 출력합니다.")
 async def 정보(ctx):
+    try:
+        users = json.load(open(hcs_path,encoding="utf_8"))['users']
+    except:
+        users = "Erorr"
+
     bot_info = discord.Embed(title=bot.user.name, color=0xffdc16)
     bot_info.add_field(name="핑", value=f'`{round(bot.latency * 1000)}ms`', inline=True)
     bot_info.add_field(name='봇 접두사', value='`/{명령어}`', inline=True)
     bot_info.add_field(name="­", value="­", inline=True)
     bot_info.add_field(name="연결된 서버 수⠀⠀⠀", value=f'`{len(bot.guilds)}개 서버`', inline=True)
-    bot_info.add_field(name="이용중인 유저 수", value=f'`{len(bot.users)}명`', inline=True)
+    bot_info.add_field(name="이용중인 유저 수", value=f'`{users}명`', inline=True)
     bot_info.add_field(name="­", value="­", inline=True)
     bot_info.add_field(name="개발 언어", value="Python [Pycord](https://docs.pycord.dev/en/master/)", inline=True)
     bot_info.add_field(name='GitHub', value='[Bot GitHub](https://github.com/justhuman1008/JustBot)', inline=True)
@@ -284,6 +289,7 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
                                     Register_Success = discord.Embed(title=f"{ctx.author}님의 자가진단 정보 입력이 완료되었습니다.", description="`/자가진단 진행`으로 자가진단을 진행할 수 있습니다.",color=0xffdc16)
                                     Register_Success.set_thumbnail(url=ImageDict["List"])
                                     await Question.edit_original_message(embed=Register_Success, view=None)
+                                    print(f"{ctx.author}님의 자가진단 정보가 입력되었습니다.")
                                 else:
                                     error_reason = errorlist[hcskr_result['code']]
                                     Register_Test_Fail = discord.Embed(title=f"{ctx.author}님의 자가진단 정보 입력이 실패하였습니다.", description=f"입력된 오류: {error_reason}",color=0xffdc16)

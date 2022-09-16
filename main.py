@@ -110,7 +110,6 @@ async def invite(ctx):
 async def db다운(ctx):
     await ctx.respond(file=discord.File(hcs_path))
 
-
 #=================================================================================================================================
 #=================================================================================================================================
 #=================================================================================================================================
@@ -281,8 +280,8 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
                     class Button(discord.ui.View):
                         @discord.ui.button(style=discord.ButtonStyle.green, emoji="✅")
                         async def OK(self, button: discord.ui.Button, interaction: discord.Interaction):
-                            hcskr_result = await asyncSelfCheck(Name, Birthday, Area, School, School_lv, Password)
                             try:
+                                hcskr_result = await asyncSelfCheck(Name, Birthday, Area, School, School_lv, Password)
                                 if hcskr_result['code'] == 'SUCCESS':
                                     add_info(ctx.author.name, ctx.author.id, Name, Birthday, Area, School, School_lv, Password)
 
@@ -326,7 +325,7 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
             else:
                 json_data[UserID][0]['Auto_check'] = "O"
 
-                Auto_on = discord.Embed(title=f"{bot.user.name} 자가진단 매크로", description="­이제부터 자가진단이 매일 오전 7시에 진행됩니다.", color=0xffdc16)
+                Auto_on = discord.Embed(title=f"{bot.user.name} 자가진단 매크로", description="­이제부터 자가진단이 매일 오전 7시 ~ 7시 10분 사이에 진행됩니다.", color=0xffdc16)
                 Auto_on.set_thumbnail(url=ImageDict["hcs_icon"])
                 await ctx.respond(embed=Auto_on)
 

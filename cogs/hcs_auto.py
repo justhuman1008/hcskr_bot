@@ -27,7 +27,7 @@ class hcs(commands.Cog):
                 json_object = json.load(open(hcs_path,encoding="utf_8"))
                 print(f'자가진단이 시작됩니다. [ {datetime.datetime.now().strftime("%y/%m/%d, %H:%M")} ]')
                 for k, v in json_object.items():
-                    if k == 'how many':
+                    if k == 'users':
                         continue
                     if v[0]['Auto_check'] == "O":
                         Nickname = v[0]['Nickname']
@@ -51,7 +51,7 @@ class hcs(commands.Cog):
                 with open(file_path, "r", encoding="utf_8") as json_file:
                     data = json.load(json_file)
 
-                data[f'how many'] = f"{amount}"
+                data[f'users'] = f"{amount}"
 
                 with open(file_path, 'w',encoding="utf_8") as writefile:
                     json.dump(data, writefile, indent="\t", ensure_ascii=False)

@@ -1,11 +1,10 @@
-import discord
 from discord.ext import commands, tasks
 from hcskr import asyncSelfCheck
 import datetime
 import json
 import random
 
-from setting import hcs_path, hcs_time_H, hcs_time_M, DB_channel
+from setting import hcs_path, hcs_time_H, hcs_time_M
 file_path = hcs_path
 
 class hcs(commands.Cog):
@@ -61,7 +60,7 @@ class hcs(commands.Cog):
             else:
                 pass
         else:
-            pass
+            print(f'주말입니다 자가진단을 진행하지 않습니다. [ {datetime.datetime.now().strftime("%y/%m/%d, %H:%M")} ]')
 
     @Auto_check.before_loop
     async def before_printer(self):

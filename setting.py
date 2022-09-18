@@ -11,7 +11,7 @@ DB_channel = int(os.environ['DB_channel']) # JSON파일을 보낼 채널
 
 hcs_path ="hcs_info.json"
 hcs_time_H = 7
-hcs_time_M = 7
+hcs_time_M = 9
 
 # 이미지 URL ----------------------------------------------------------------------------------------------
 

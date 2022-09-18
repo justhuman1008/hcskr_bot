@@ -289,16 +289,19 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
                                     Register_Success.set_thumbnail(url=ImageDict["List"])
                                     await Question.edit_original_message(embed=Register_Success, view=None)
                                     print(f"{ctx.author}님의 자가진단 정보가 입력되었습니다.")
+                                    return
                                 else:
                                     error_reason = errorlist[hcskr_result['code']]
                                     Register_Test_Fail = discord.Embed(title=f"{ctx.author}님의 자가진단 정보 입력이 실패하였습니다.", description=f"입력된 오류: {error_reason}",color=0xffdc16)
                                     Register_Test_Fail.set_thumbnail(url=ImageDict["List"])
                                     await Question.edit_original_message(embed=Register_Test_Fail, view=None)
+                                    return
                             except:
                                 error_reason = errorlist[hcskr_result['code']]
                                 Failed_reg = discord.Embed(title="자가진단 정보 등록에 실패했습니다.", description=f'정보를 모두 "정확히" 입력했는지 확인해주세요\n 입력된 오류: {error_reason}', color=0xffdc16)
                                 Failed_reg.set_thumbnail(url=ImageDict["List"])
                                 await Question.edit_original_message(embed=Failed_reg)
+                                return
                             
                         @discord.ui.button(style=discord.ButtonStyle.red, emoji="⛔")
                         async def Nope(self, button: discord.ui.Button, interaction: discord.Interaction):

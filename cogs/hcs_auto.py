@@ -11,6 +11,7 @@ class hcs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.time = 3
+        self.weekend_do = 0
         self.Auto_check.start()
 
     @tasks.loop(seconds=40)
@@ -60,7 +61,15 @@ class hcs(commands.Cog):
             else:
                 pass
         else:
-            print(f'주말입니다 자가진단을 진행하지 않습니다. [ {datetime.datetime.now().strftime("%y/%m/%d, %H:%M")} ]')
+            if self.weekend_do == 0:
+                print(f'주말입니다 자가진단을 진행하지 않습니다. [ {datetime.datetime.now().strftime("%y/%m/%d, %H:%M")} ]')
+                self.weekend_do = 1
+            else:
+                pass
+
+            if datetime.datetime.now().strftime("%H:%M") == "11:59":
+                self.weekend_do = 0
+            
 
     @Auto_check.before_loop
     async def before_printer(self):

@@ -46,8 +46,14 @@ async def 도움말(ctx):
     Help_Embed.add_field(name=f"자가진단 정보 입력하기 ⠀⠀⠀⠀", value=f":small_blue_diamond: /자가진단 등록", inline=True)
     Help_Embed.add_field(name=f"자가진단 정보 삭제하기 ", value=f":small_blue_diamond: /자가진단 삭제", inline=True)
     Help_Embed.add_field(name="­", value=f"­", inline=True)
-    Help_Embed.add_field(name=f"자가진단 실행하기 ⠀⠀⠀⠀", value=f":small_blue_diamond: /자가진단 실행", inline=True)
+    Help_Embed.add_field(name=f"자가진단 실행하기", value=f":small_blue_diamond: /자가진단 실행", inline=True)
     Help_Embed.add_field(name=f"자가진단 예약하기", value=f":small_blue_diamond: /자가진단 예약", inline=True)
+    Help_Embed.add_field(name="­", value=f"­", inline=True)
+    Help_Embed.add_field(name=f"명령어 목록 확인하기", value=f":small_blue_diamond: /도움말", inline=True)
+    Help_Embed.add_field(name=f"봇의 정보 확인하기", value=f":small_blue_diamond: /정보", inline=True)
+    Help_Embed.add_field(name="­", value=f"­", inline=True)
+    Help_Embed.add_field(name=f"초대링크 받기", value=f":small_blue_diamond: /invite", inline=True)
+    Help_Embed.add_field(name=f"봇 레이턴시 확인하기 ", value=f":small_blue_diamond: /ping", inline=True)
     Help_Embed.add_field(name="­", value=f"­", inline=True)
     Help_Embed.add_field(name="­", value=f"­", inline=False)
     Help_Embed.add_field(name="자가진단 매크로 등록 방법을 모른다면?", value=f":small_blue_diamond: /가이드", inline=False)
@@ -59,9 +65,9 @@ async def 도움말(ctx):
 async def 가이드(ctx):
     guide = discord.Embed(title=f"자가진단 자동화 등록 가이드", description=f"­", colour=0xffdc16)
     guide.add_field(name=f"1. 자신의 정보 입력하기", value="`/자가진단 등록`으로 자신의 정보를 입력합니다.", inline=False)
-    guide.add_field(name=f"2. 자가진단 예약하기", value="`/자가진단 예약`을 입력시 앞으로 매일 오전 7~7시 10분 사이 자가진단을 진행합니다.", inline=False)
-    guide.add_field(name=f"3. 자가진단 예약 해제하기", value="`/자가진단 예약`을 다시 입력하시면 자동 자가진단이 종료됩니다.", inline=False)
-    guide.add_field(name=f"4. 지금 자가진단하기", value=f"`/자가진단 실행`을 입력하면 지금 자가진단을 진행합니다.", inline=False)
+    guide.add_field(name=f"2. 지금 자가진단하기", value=f"`/자가진단 실행`을 입력하면 지금 자가진단을 진행합니다.", inline=False)
+    guide.add_field(name=f"3. 자가진단 예약 해제하기", value="`/자가진단 예약`을 입력하시면 다음부터 자가진단 매크로가 중단됩니다.(정보는 삭제되지 않습니다)", inline=False)
+    guide.add_field(name=f"4. 자가진단 정보 삭제하기", value=f"`/자가진단 삭제`을 입력하면 자가진단용 정보가 삭제됩니다.", inline=False)
     guide.set_thumbnail(url=bot.user.display_avatar)
     await ctx.respond(embed=guide)
 
@@ -109,6 +115,7 @@ async def invite(ctx):
 @bot.slash_command(guild_ids=[guild], description="봇에서 유저 DB를 다운받습니다.")
 async def db다운(ctx):
     await ctx.respond(file=discord.File(hcs_path))
+    print("관리자가 유저 DB를 다운로드 받았습니다.")
 
 #=================================================================================================================================
 #=================================================================================================================================
@@ -145,7 +152,7 @@ def add_info(Nickname, DiscordID, Name, Birthday, Area, School, School_lv, Passw
         "School": f"{School}",
         "School_lv": f"{School_lv}",
         "Password": f"{Password}",
-        "Auto_check": f"X"})
+        "Auto_check": f"O"})
 
     with open(file_path, 'w',encoding="utf_8") as writefile:
         json.dump(data, writefile, indent="\t", ensure_ascii=False)
@@ -182,7 +189,6 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
         if TrueFalse:
             with open(file_path, "r", encoding="utf_8") as json_file:
                 json_data = json.load(json_file)
-            #print(json_data[UserID][0])
             Name = json_data[UserID][0]['Name']
             Birthday = json_data[UserID][0]['Birthday']
             Area = json_data[UserID][0]['Area']
@@ -224,11 +230,11 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
                     if TrueFalse:
                         Delete_Success = discord.Embed(title=f"{ctx.author.name}님의 진단정보 삭제가 완료되었습니다.", description="추후 자가진단을 진행하시려면 다시 `/자가진단 등록`을 입력해주세요", color=0xffdc16)
                         Delete_Success.set_thumbnail(url=ImageDict["Trash_can"])
-                        await Question.edit_original_message(embed=Delete_Success, view=None)
+                        return await Question.edit_original_message(embed=Delete_Success, view=None)
 
                 @discord.ui.button(style=discord.ButtonStyle.red, emoji="⛔")
                 async def Nope(self, button: discord.ui.Button, interaction: discord.Interaction):
-                    await Question.edit_original_message(embed=Delete_Failed, view=None)
+                    return await Question.edit_original_message(embed=Delete_Failed, view=None)
 
                 async def on_timeout(self):
                     await Question.edit_original_message(embed=Delete_Failed, view=None)
@@ -287,28 +293,25 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
 
                                     Register_Success = discord.Embed(title=f"{ctx.author}님의 자가진단 정보 입력이 완료되었습니다.", description="`/자가진단 진행`으로 자가진단을 진행할 수 있습니다.",color=0xffdc16)
                                     Register_Success.set_thumbnail(url=ImageDict["List"])
-                                    await Question.edit_original_message(embed=Register_Success, view=None)
                                     print(f"{ctx.author}님의 자가진단 정보가 입력되었습니다.")
-                                    return
+                                    return await Question.edit_original_message(embed=Register_Success, view=None)
                                 else:
                                     error_reason = errorlist[hcskr_result['code']]
                                     Register_Test_Fail = discord.Embed(title=f"{ctx.author}님의 자가진단 정보 입력이 실패하였습니다.", description=f"입력된 오류: {error_reason}",color=0xffdc16)
                                     Register_Test_Fail.set_thumbnail(url=ImageDict["List"])
-                                    await Question.edit_original_message(embed=Register_Test_Fail, view=None)
-                                    return
+                                    return await Question.edit_original_message(embed=Register_Test_Fail, view=None)
                             except:
                                 error_reason = errorlist[hcskr_result['code']]
                                 Failed_reg = discord.Embed(title="자가진단 정보 등록에 실패했습니다.", description=f'정보를 모두 "정확히" 입력했는지 확인해주세요\n 입력된 오류: {error_reason}', color=0xffdc16)
                                 Failed_reg.set_thumbnail(url=ImageDict["List"])
-                                await Question.edit_original_message(embed=Failed_reg)
-                                return
+                                return await Question.edit_original_message(embed=Failed_reg)
                             
                         @discord.ui.button(style=discord.ButtonStyle.red, emoji="⛔")
                         async def Nope(self, button: discord.ui.Button, interaction: discord.Interaction):
-                            await Question.edit_original_message(embed=Register_Failed, view=None)
+                            return await Question.edit_original_message(embed=Register_Failed, view=None)
 
                         async def on_timeout(self):
-                            await Question.edit_original_message(embed=Register_Failed, view=None)
+                            return await Question.edit_original_message(embed=Register_Failed, view=None)
 
                     Question = await interaction.response.send_message(embed=register,view=Button(timeout=60))
             await ctx.interaction.response.send_modal(infoQ())
@@ -363,7 +366,8 @@ async def 강제추가(ctx, 디스코드닉네임, 디스코드id, 이름, 생�
 
         with open(file_path, 'w',encoding="utf_8") as writefile:
             json.dump(json_data, writefile, indent="\t", ensure_ascii=False)
-        await ctx.respond("입력 성공")
+        await ctx.respond(f"`{디스코드닉네임}`님의 정보를 DB에 입력했습니다.")
+        print(f"{디스코드닉네임}님의 자가진단 정보가 관리자 권한으로 입력되었습니다.")
     except:
         await ctx.respond("입력 실패")
 

@@ -31,6 +31,3 @@ Heroku나 GCP, 오라클 클라우드 등 서버 호스팅 IP를 블락한건지
 
 <img src="/Image/step3.gif" alt ="Step 3" style="width: 500px;"/>
 3. ✅버튼 누르기   
-
-<img src="/Image/step4.gif" alt ="Step 3" style="width: 500px;"/>
-4. `/자가진단 예약` 입력   

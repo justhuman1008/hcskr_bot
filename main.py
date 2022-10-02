@@ -49,13 +49,13 @@ async def 도움말(ctx):
     Help_Embed.add_field(name=f"자가진단 실행하기", value=f":small_blue_diamond: /자가진단 실행", inline=True)
     Help_Embed.add_field(name=f"자가진단 예약하기", value=f":small_blue_diamond: /자가진단 예약", inline=True)
     Help_Embed.add_field(name="­", value=f"­", inline=True)
+    Help_Embed.add_field(name="­", value=f"­", inline=False)
     Help_Embed.add_field(name=f"명령어 목록 확인하기", value=f":small_blue_diamond: /도움말", inline=True)
     Help_Embed.add_field(name=f"봇의 정보 확인하기", value=f":small_blue_diamond: /정보", inline=True)
     Help_Embed.add_field(name="­", value=f"­", inline=True)
     Help_Embed.add_field(name=f"초대링크 받기", value=f":small_blue_diamond: /invite", inline=True)
     Help_Embed.add_field(name=f"봇 레이턴시 확인하기 ", value=f":small_blue_diamond: /ping", inline=True)
     Help_Embed.add_field(name="­", value=f"­", inline=True)
-    Help_Embed.add_field(name="­", value=f"­", inline=False)
     Help_Embed.add_field(name="자가진단 매크로 등록 방법을 모른다면?", value=f":small_blue_diamond: /가이드", inline=False)
     Help_Embed.set_thumbnail(url=bot.user.display_avatar)
     await ctx.respond(embed=Help_Embed)
@@ -230,14 +230,16 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
                     if TrueFalse:
                         Delete_Success = discord.Embed(title=f"{ctx.author.name}님의 진단정보 삭제가 완료되었습니다.", description="추후 자가진단을 진행하시려면 다시 `/자가진단 등록`을 입력해주세요", color=0xffdc16)
                         Delete_Success.set_thumbnail(url=ImageDict["Trash_can"])
-                        return await Question.edit_original_message(embed=Delete_Success, view=None)
+                        await Question.edit_original_message(embed=Delete_Success, view=None)
+                        self.timeout_disable = True
 
                 @discord.ui.button(style=discord.ButtonStyle.red, emoji="⛔")
                 async def Nope(self, button: discord.ui.Button, interaction: discord.Interaction):
-                    return await Question.edit_original_message(embed=Delete_Failed, view=None)
+                    await Question.edit_original_message(embed=Delete_Failed, view=None)
 
                 async def on_timeout(self):
-                    await Question.edit_original_message(embed=Delete_Failed, view=None)
+                    if not self.timeout_disable == True:
+                        await Question.edit_original_message(embed=Delete_Failed, view=None)
 
             Question = await ctx.respond(embed=Delete, view=Button(timeout=60))
         else:
@@ -294,24 +296,28 @@ async def 자가진단(ctx, 작업:Option(str,"다음 중 하나를 선택하세
                                     Register_Success = discord.Embed(title=f"{ctx.author}님의 자가진단 정보 입력이 완료되었습니다.", description="`/자가진단 진행`으로 자가진단을 진행할 수 있습니다.",color=0xffdc16)
                                     Register_Success.set_thumbnail(url=ImageDict["List"])
                                     print(f"{ctx.author}님의 자가진단 정보가 입력되었습니다.")
-                                    return await Question.edit_original_message(embed=Register_Success, view=None)
+                                    await Question.edit_original_message(embed=Register_Success, view=None)
                                 else:
                                     error_reason = errorlist[hcskr_result['code']]
                                     Register_Test_Fail = discord.Embed(title=f"{ctx.author}님의 자가진단 정보 입력이 실패하였습니다.", description=f"입력된 오류: {error_reason}",color=0xffdc16)
                                     Register_Test_Fail.set_thumbnail(url=ImageDict["List"])
-                                    return await Question.edit_original_message(embed=Register_Test_Fail, view=None)
+                                    await Question.edit_original_message(embed=Register_Test_Fail, view=None)
                             except:
                                 error_reason = errorlist[hcskr_result['code']]
                                 Failed_reg = discord.Embed(title="자가진단 정보 등록에 실패했습니다.", description=f'정보를 모두 "정확히" 입력했는지 확인해주세요\n 입력된 오류: {error_reason}', color=0xffdc16)
                                 Failed_reg.set_thumbnail(url=ImageDict["List"])
-                                return await Question.edit_original_message(embed=Failed_reg)
+                                await Question.edit_original_message(embed=Failed_reg)
+                                
+                            self.timeout_disable = True
                             
                         @discord.ui.button(style=discord.ButtonStyle.red, emoji="⛔")
                         async def Nope(self, button: discord.ui.Button, interaction: discord.Interaction):
-                            return await Question.edit_original_message(embed=Register_Failed, view=None)
+                            await Question.edit_original_message(embed=Register_Failed, view=None)
+                            self.timeout_disable = True
 
                         async def on_timeout(self):
-                            return await Question.edit_original_message(embed=Register_Failed, view=None)
+                            if not self.timeout_disable == True:
+                                await Question.edit_original_message(embed=Register_Failed, view=None)
 
                     Question = await interaction.response.send_message(embed=register,view=Button(timeout=60))
             await ctx.interaction.response.send_modal(infoQ())

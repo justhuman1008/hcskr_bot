@@ -19,15 +19,15 @@ Heroku나 GCP, 오라클 클라우드 등 서버 호스팅 IP를 블락한건지
 ### [**✉️ 봇 초대하기**](https://discord.com/oauth2/authorize?client_id=971972027281989662&permissions=412317142080&scope=bot%20applications.commands)
 
 ### 봇 도움말
-<img src="/Image/help.png" alt ="Image" style="width: 500px;"/>  
+<img src="/Image/help.png" alt ="Image" style="width: 510px;"/>  
 
 
 # 자가진단 예약 하는 방법
-<img src="/Image/step1.gif" alt ="Step 1" style="width: 480px;"/>
+<img src="/Image/step1.gif" alt ="Step 1" style="width: 500px;"/>
 1. `/자가진단 등록` 입력   
 
-<img src="/Image/step2.gif" alt ="Step 2" style="width: 480px;"/>
+<img src="/Image/step2.gif" alt ="Step 2" style="width: 500px;"/>
 2. 자가진단용 정보 입력   
 
-<img src="/Image/step3.gif" alt ="Step 3" style="width: 480px;"/>
+<img src="/Image/step3.gif" alt ="Step 3" style="width: 500px;"/>
 3. ✅버튼 누르기   

@@ -23,11 +23,11 @@ Heroku나 GCP, 오라클 클라우드 등 서버 호스팅 IP를 블락한건지
 
 
 # 자가진단 예약 하는 방법
-<img src="/Image/step1.webp" alt ="Step 1" style="width: 500px;"/>
+<img src="/Image/guide 1.webp" alt ="Step 1" style="width: 500px;"/>
 1. `/자가진단 등록` 입력   
 
-<img src="/Image/step2.webp" alt ="Step 2" style="width: 500px;"/>
+<img src="/Image/guide 2.webp" alt ="Step 2" style="width: 500px;"/>
 2. 자가진단용 정보 입력   
 
-<img src="/Image/step3.webp" alt ="Step 3" style="width: 500px;"/>
+<img src="/Image/guide 3.webp" alt ="Step 3" style="width: 500px;"/>
 3. ✅버튼 누르기   

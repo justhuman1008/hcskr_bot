@@ -34,7 +34,7 @@ class MEAL(commands.Cog):
 
         try:
             API_Main = "https://open.neis.go.kr/hub/schoolInfo?"
-            API_String = f"KEY={Neis_key}&Type=json&pIndex=1&pSize=5&SCHUL_NM={School}&SCHUL_KND_SC_NM={School_lv}"
+            API_String = f"Type=json&pIndex=1&pSize=5&SCHUL_NM={School}&SCHUL_KND_SC_NM={School_lv}"
             API = API_Main + API_String
 
             SchoolAPI = requests.get(API).json()
@@ -50,7 +50,7 @@ class MEAL(commands.Cog):
 
 
         API_Main = "https://open.neis.go.kr/hub/mealServiceDietInfo?"
-        API_String =f"KEY={Neis_key}&Type=json&pIndex=1&pSize=5&ATPT_OFCDC_SC_CODE={Moe_code}&SD_SCHUL_CODE={School_code}&MLSV_YMD={day}&MMEAL_SC_CODE={meal_code}"
+        API_String =f"Type=json&pIndex=1&pSize=5&ATPT_OFCDC_SC_CODE={Moe_code}&SD_SCHUL_CODE={School_code}&MLSV_YMD={day}&MMEAL_SC_CODE={meal_code}"
         API = API_Main + API_String
 
         mealAPI = requests.get(API).json()

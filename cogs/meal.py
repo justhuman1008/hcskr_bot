@@ -32,15 +32,20 @@ class MEAL(commands.Cog):
             not_registered.set_thumbnail(url=ImageDict["List_Failed"])
             return await ctx.respond(embed=not_registered)
 
-        API_Main = "https://open.neis.go.kr/hub/schoolInfo?"
-        API_String = f"KEY={Neis_key}&Type=json&pIndex=1&pSize=5&SCHUL_NM={School}&SCHUL_KND_SC_NM={School_lv}"
-        API = API_Main + API_String
+        try:
+            API_Main = "https://open.neis.go.kr/hub/schoolInfo?"
+            API_String = f"KEY={Neis_key}&Type=json&pIndex=1&pSize=5&SCHUL_NM={School}&SCHUL_KND_SC_NM={School_lv}"
+            API = API_Main + API_String
 
-        SchoolAPI = requests.get(API).json()
-        School_code = SchoolAPI['schoolInfo'][1]['row'][0]['SD_SCHUL_CODE']
-        Moe_code = SchoolAPI['schoolInfo'][1]['row'][0]['ATPT_OFCDC_SC_CODE']
+            SchoolAPI = requests.get(API).json()
+            School_code = SchoolAPI['schoolInfo'][1]['row'][0]['SD_SCHUL_CODE']
+            Moe_code = SchoolAPI['schoolInfo'][1]['row'][0]['ATPT_OFCDC_SC_CODE']
 
-        Area = Areas[Moe_code][1]
+            Area = Areas[Moe_code][1]
+        except:
+            API1_error = discord.Embed(title="학교 검색에 실패했습니다.", description="-", color=0xffdc16)
+            API1_error.set_thumbnail(url=ImageDict["List_Failed"])
+            return await ctx.respond(embed=not_registered)
 
 
         API_Main = "https://open.neis.go.kr/hub/mealServiceDietInfo?"

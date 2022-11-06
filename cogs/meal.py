@@ -6,7 +6,7 @@ import requests
 import datetime
 import json
 
-from setting import Neis_key, DB_path, ImageDict
+from setting import Neis_key, DB_path, ImageDict, Areas
 
 #------------------------------------------------------------------------------------------
 
@@ -16,6 +16,7 @@ class MEAL(commands.Cog):
 
     @slash_command(description="우리학교의 오늘 점심 급식을 확인합니다.")
     async def 급식(self, ctx, 식사시간:Option(str,"다음 중 하나를 선택하세요. [기본값:점심]", choices=["아침", "점심", "저녁"])="점심"):
+
         meal_dic = {"아침":1, "점심":2, "저녁":3}
         meal_code =meal_dic[식사시간]
         UserID = str(ctx.author.id)
@@ -23,13 +24,24 @@ class MEAL(commands.Cog):
             with open(DB_path, "r", encoding="utf_8") as json_file:
                 json_data = json.load(json_file)
 
-            Moe_code = json_data[UserID][0]['Moe_code'] #교육청코드
-            School_code = json_data[UserID][0]['School_code'] #학교코드
+            School = json_data[UserID][0]['School'] # 학교명
+            School_lv = json_data[UserID][0]['School_lv'] # 학교분류
             day = datetime.datetime.now().strftime("%y%m%d") #오늘날짜
         except:
             not_registered = discord.Embed(title="등록되지 않은 사용자입니다.", description="해당 기능을 이용하시려면 `/자가진단 등록`을 입력해주세요", color=0xffdc16)
             not_registered.set_thumbnail(url=ImageDict["List_Failed"])
             return await ctx.respond(embed=not_registered)
+
+        API_Main = "https://open.neis.go.kr/hub/schoolInfo?"
+        API_String = f"KEY={Neis_key}&Type=json&pIndex=1&pSize=5&SCHUL_NM={School}&SCHUL_KND_SC_NM={School_lv}"
+        API = API_Main + API_String
+
+        SchoolAPI = requests.get(API).json()
+        School_code = SchoolAPI['schoolInfo'][1]['row'][0]['SD_SCHUL_CODE']
+        Moe_code = SchoolAPI['schoolInfo'][1]['row'][0]['ATPT_OFCDC_SC_CODE']
+
+        Area = Areas[Moe_code][1]
+
 
         API_Main = "https://open.neis.go.kr/hub/mealServiceDietInfo?"
         API_String =f"KEY={Neis_key}&Type=json&pIndex=1&pSize=5&ATPT_OFCDC_SC_CODE={Moe_code}&SD_SCHUL_CODE={School_code}&MLSV_YMD={day}&MMEAL_SC_CODE={meal_code}"

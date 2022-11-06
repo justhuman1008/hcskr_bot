@@ -10,7 +10,7 @@ import json
 from os import listdir
 from sys import exit
 
-from setting import token, Neis_key, owner, guild, DB_path, ImageDict, Areas
+from setting import token, owner, guild, DB_path, ImageDict
 from hcskr import asyncSelfCheck
 
 bot = discord.Bot()
@@ -135,17 +135,6 @@ def add_info(Nickname, DiscordID, Name, Birthday, Area, School, School_lv, Passw
     if register:
         return
 
-    API_Main = "https://open.neis.go.kr/hub/schoolInfo?"
-    API_String = f"KEY={Neis_key}&Type=json&pIndex=1&pSize=5&SCHUL_NM={School}&SCHUL_KND_SC_NM={School_lv}"
-    API = API_Main + API_String
-
-    SchoolAPI = requests.get(API).json()
-    School_code = SchoolAPI['schoolInfo'][1]['row'][0]['SD_SCHUL_CODE']
-    Moe_code = SchoolAPI['schoolInfo'][1]['row'][0]['ATPT_OFCDC_SC_CODE']
-
-
-    Area = Areas[Moe_code][1]
-
     data = {}
     with open(DB_path, "r", encoding="utf_8") as json_file:
         data = json.load(json_file)
@@ -159,8 +148,6 @@ def add_info(Nickname, DiscordID, Name, Birthday, Area, School, School_lv, Passw
         "Area": f"{Area}",
         "School": f"{School}",
         "School_lv": f"{School_lv}",
-        "School_code": f"{School_code}",
-        "Moe_code": f"{Moe_code}",
         "Password": f"{Password}",
         "Auto_check": f"O"})
 

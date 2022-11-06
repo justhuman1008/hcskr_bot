@@ -14,6 +14,7 @@ class MEAL(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+'''
     @slash_command(description="우리학교의 오늘 점심 급식을 확인합니다.")
     async def 급식(self, ctx, 식사시간:Option(str,"다음 중 하나를 선택하세요. [기본값:점심]", choices=["아침", "점심", "저녁"])="점심"):
 
@@ -82,6 +83,6 @@ class MEAL(commands.Cog):
             Meal_Embed = discord.Embed(title=f"급식 조회에 실패했습니다.", description=f"오류코드:{code} \n오류내용:{msg}", color=0xffdc16)
             Meal_Embed.set_thumbnail(url=ImageDict["Meal"])
             await ctx.respond(embed=Meal_Embed)
-
+'''
 def setup(bot):
     bot.add_cog(MEAL(bot))

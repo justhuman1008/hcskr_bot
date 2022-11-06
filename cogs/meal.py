@@ -43,9 +43,10 @@ class MEAL(commands.Cog):
 
             Area = Areas[Moe_code][1]
         except:
+            print(SchoolAPI)
             API1_error = discord.Embed(title="학교 검색에 실패했습니다.", description="-", color=0xffdc16)
             API1_error.set_thumbnail(url=ImageDict["List_Failed"])
-            return await ctx.respond(embed=not_registered)
+            return await ctx.respond(embed=API1_error)
 
 
         API_Main = "https://open.neis.go.kr/hub/mealServiceDietInfo?"

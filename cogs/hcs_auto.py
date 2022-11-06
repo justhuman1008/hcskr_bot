@@ -4,8 +4,9 @@ import datetime
 import json
 import random
 
-from setting import hcs_path, hcs_time_H, hcs_time_M
-file_path = hcs_path
+from setting import hcs_time_H, hcs_time_M, DB_path
+
+#------------------------------------------------------------------------------------------
 
 class hcs(commands.Cog):
     def __init__(self, bot):
@@ -29,7 +30,7 @@ class hcs(commands.Cog):
 
                 else: # 오늘이 주말이 아니라면
                     amount = 0
-                    json_object = json.load(open(hcs_path,encoding="utf_8"))
+                    json_object = json.load(open(DB_path,encoding="utf_8"))
                     print(f'자가진단이 시작됩니다. [ {datetime.datetime.now().strftime("%y/%m/%d, %H:%M")} ]')
                     for k, v in json_object.items():
                         if k == 'users':
@@ -52,11 +53,11 @@ class hcs(commands.Cog):
                                 print(f" -{Nickname} : 자가진단 실패 - {hcskr_result['code']}")
 
                     print(f" - 오늘 진행한 자가진단 횟수: {amount}")
-                    with open(file_path, "r", encoding="utf_8") as json_file:
+                    with open(DB_path, "r", encoding="utf_8") as json_file:
                         data = json.load(json_file)
                     data[f'users'] = f"{amount}"
 
-                    with open(file_path, 'w',encoding="utf_8") as writefile:
+                    with open(DB_path, 'w',encoding="utf_8") as writefile:
                         json.dump(data, writefile, indent="\t", ensure_ascii=False)
 
                     self.time = random.randrange(1,8)
